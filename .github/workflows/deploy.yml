@@ -61,21 +61,3 @@ jobs:
           publish_branch: gh-pages  # Ensure deployment goes to the correct branch
           force_orphan: true  # Forces a clean deployment, ensuring no old files
           cname: ""  # Optional: If you're using a custom domain, set it here
-
-  post-deploy:
-    name: Post Deployment Steps
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - name: Wait for deployment
-        run: sleep 60  # Wait for 1 minute before verifying the page
-
-      - name: Confirm GitHub Pages Deployment
-        run: |
-          http_status=$(curl -s -o /dev/null -w "%{http_code}" https://harshitsingh9003.github.io/Tirupati-INN-homestay-Varanasi)
-          if [ "$http_status" -eq 200 ]; then
-            echo "Deployment successful!"
-          else
-            echo "Deployment failed with status code: $http_status"
-            exit 1
-          fi
