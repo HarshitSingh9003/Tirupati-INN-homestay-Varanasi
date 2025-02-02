@@ -12,18 +12,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Updated to latest version
+        uses: actions/checkout@v4  # Latest version
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4  # Updated to latest version
+        uses: actions/setup-node@v4  # Latest version
         with:
-          node-version: 18  # Ensures compatibility
+          node-version: 18  # Ensures correct version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
+
+      - name: Verify build output
+        run: ls -la ./dist  # Debugging step to check if dist/ is created
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4  # Updated version
@@ -39,16 +42,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Updated to latest version
+        uses: actions/checkout@v4
 
       - name: Download artifact
-        uses: actions/download-artifact@v4  # Updated version
+        uses: actions/download-artifact@v4
         with:
           name: production-files
           path: ./dist
 
+      - name: Verify artifact files
+        run: ls -la ./dist  # Debugging step to ensure dist/ contains files
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4  # Ensure latest version
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          force_orphan: true  # Forces a clean deployment
