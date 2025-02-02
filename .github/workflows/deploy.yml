@@ -69,4 +69,4 @@ jobs:
     steps:
       - name: Confirm GitHub Pages Deployment
         run: |
-          curl -s https://<your-github-username>.github.io/<your-repo-name> | grep "Your page has been deployed."
+          curl -s https://<harshitsingh9003>.github.io/<Tirupati-INN-homestay-Varanasi> | grep "Your page has been deployed."
